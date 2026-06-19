@@ -1,118 +1,9 @@
-export const RECIPES = [
-  {
-    id: "kasuya-immersion",
-    name: "粕谷式 浸漬法",
-    nameEn: "Kasuya Immersion",
-    description:
-      "粕谷哲さんが公開している浸漬式レシピ。HARIO SwitchまたはClever Dripperで、45gずつ均等に5回注ぐだけ。シンプルで再現性が高く、均一な抽出ができます。",
-    accent: "#B5956A",
-    index: "01",
-    temperature: 90,
-    temperatureLabel: "90℃",
-    grind: "中粗挽き",
-    equipment: "HARIO Switch / Clever Dripper",
-    amounts: {
-      15: {
-        beans: 15,
-        water: 225,
-        steps: [
-          {
-            time: 0, duration: 30,
-            action: "1投目",
-            water: 45, totalWater: 45,
-            instruction: "スイッチを閉じた状態で45mlを注ぎます。豆全体を均一に湿らせましょう。",
-          },
-          {
-            time: 30, duration: 30,
-            action: "2投目",
-            water: 45, totalWater: 90,
-            instruction: "45ml注ぎます（累計90ml）。",
-          },
-          {
-            time: 60, duration: 30,
-            action: "3投目",
-            water: 45, totalWater: 135,
-            instruction: "45ml注ぎます（累計135ml）。",
-          },
-          {
-            time: 90, duration: 30,
-            action: "4投目",
-            water: 45, totalWater: 180,
-            instruction: "45ml注ぎます（累計180ml）。",
-          },
-          {
-            time: 120, duration: 30,
-            action: "5投目（最終）",
-            water: 45, totalWater: 225,
-            instruction: "最後の45mlを注ぎます（累計225ml）。",
-          },
-          {
-            time: 150, duration: 60,
-            action: "スイッチを開く",
-            water: 0, totalWater: 225,
-            instruction: "スイッチを開いてドリップを開始します。落ちきるまで待ちましょう。",
-          },
-          {
-            time: 210, duration: 0,
-            action: "完成",
-            water: 0, totalWater: 225,
-            instruction: "完成です。均一でクリアな一杯をお楽しみください。",
-            isFinal: true,
-          },
-        ],
-      },
-      20: {
-        beans: 20,
-        water: 300,
-        steps: [
-          {
-            time: 0, duration: 30,
-            action: "1投目",
-            water: 60, totalWater: 60,
-            instruction: "スイッチを閉じた状態で60mlを注ぎます。豆全体を均一に湿らせましょう。",
-          },
-          {
-            time: 30, duration: 30,
-            action: "2投目",
-            water: 60, totalWater: 120,
-            instruction: "60ml注ぎます（累計120ml）。",
-          },
-          {
-            time: 60, duration: 30,
-            action: "3投目",
-            water: 60, totalWater: 180,
-            instruction: "60ml注ぎます（累計180ml）。",
-          },
-          {
-            time: 90, duration: 30,
-            action: "4投目",
-            water: 60, totalWater: 240,
-            instruction: "60ml注ぎます（累計240ml）。",
-          },
-          {
-            time: 120, duration: 30,
-            action: "5投目（最終）",
-            water: 60, totalWater: 300,
-            instruction: "最後の60mlを注ぎます（累計300ml）。",
-          },
-          {
-            time: 150, duration: 60,
-            action: "スイッチを開く",
-            water: 0, totalWater: 300,
-            instruction: "スイッチを開いてドリップを開始します。落ちきるまで待ちましょう。",
-          },
-          {
-            time: 210, duration: 0,
-            action: "完成",
-            water: 0, totalWater: 300,
-            instruction: "完成です。均一でクリアな一杯をお楽しみください。",
-            isFinal: true,
-          },
-        ],
-      },
-    },
-  },
+// レシピの追加は RECIPES 配列にオブジェクトを追加するだけ。
+// 必須フィールド: id, name, nameEn, description, accent, index, temperature,
+//   temperatureLabel, grind, equipment, amounts: { 15: {...}, 20: {...} }
+// amounts[n].steps の各ステップ: { time, duration, action, water, totalWater, instruction, temp?, isFinal? }
 
+export const RECIPES = [
   {
     id: "devil-recipe",
     name: "悪魔のレシピ",
@@ -120,7 +11,7 @@ export const RECIPES = [
     description:
       "粕谷哲さん考案のハイブリッドメソッド。前半は透過式（スイッチ開・90℃）で酸味と甘みを引き出し、後半は浸漬式（スイッチ閉・70℃）でまろやかさを加える二刀流レシピ。HARIO Switchが必須です。",
     accent: "#8B3A3A",
-    index: "02",
+    index: "01",
     temperature: 90,
     temperatureLabel: "90 → 70℃",
     grind: "中挽き〜やや粗挽き",
@@ -228,7 +119,7 @@ export const RECIPES = [
     description:
       "コーヒー研究者 Samo Smrke の研究をもとに Lance Hendrick が広めた手法。常温水（約20℃）で2分間蒸らすことで、高温で逃げてしまう揮発性の香り成分をコーヒーに留めます。",
     accent: "#7A8C6E",
-    index: "03",
+    index: "02",
     temperature: 94,
     temperatureLabel: "20℃ → 94℃",
     grind: "中挽き〜やや粗挽き",
@@ -326,7 +217,7 @@ export const RECIPES = [
     description:
       "粕谷哲さんが2016年 World Brewers Cup で披露した革命的なV60レシピ。湯量の前40%で甘み・酸味を調整し、後60%で濃度を決める。5投均等注ぎで誰でも再現できます。",
     accent: "#5C7A96",
-    index: "04",
+    index: "03",
     temperature: 93,
     temperatureLabel: "93℃",
     grind: "粗挽き",
