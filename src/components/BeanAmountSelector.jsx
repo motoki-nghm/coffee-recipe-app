@@ -55,7 +55,7 @@ export default function BeanAmountSelector({ recipe, selected, onSelect, onStart
             {[
               { label: "豆の量", value: `${selected} g` },
               { label: "湯量", value: `${recipe.amounts[selected].water} ml` },
-              { label: "湯温", value: `${recipe.temperature} ℃` },
+              { label: "湯温", value: recipe.temperatureLabel },
               { label: "挽き目", value: recipe.grind },
               { label: "器具", value: recipe.equipment },
             ].map(({ label, value }) => (

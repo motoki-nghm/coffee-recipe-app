@@ -25,7 +25,7 @@ export default function RecipeCard({ recipe, isLast, onClick }) {
           </p>
           <div className="mt-3 flex gap-3">
             <span className="text-[11px] text-stone-400">
-              {recipe.temperature}℃ · {recipe.grind}
+              {recipe.temperatureLabel} · {recipe.grind}
             </span>
           </div>
         </div>

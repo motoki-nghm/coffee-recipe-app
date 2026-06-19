@@ -105,14 +105,30 @@ export default function RecipeTimer({ recipe, beanAmount, onBack }) {
             <h3 className="font-serif-display text-xl text-stone-900 leading-snug">
               {currentStep.action}
             </h3>
-            {currentStep.water > 0 && (
-              <div
-                className="shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full"
-                style={{ background: recipe.accent + "18", color: recipe.accent }}
-              >
-                {currentStep.water} ml
-              </div>
-            )}
+            <div className="flex flex-col items-end gap-1 shrink-0">
+              {currentStep.water > 0 && (
+                <div
+                  className="text-[11px] font-medium px-2.5 py-1 rounded-full"
+                  style={{ background: recipe.accent + "18", color: recipe.accent }}
+                >
+                  {currentStep.water} ml
+                </div>
+              )}
+              {currentStep.temp != null && (
+                <div
+                  className="text-[11px] font-medium px-2.5 py-1 rounded-full"
+                  style={
+                    currentStep.temp <= 30
+                      ? { background: "#E8F4F8", color: "#4A8FA8" }
+                      : currentStep.temp <= 75
+                      ? { background: "#FFF3E0", color: "#E07B39" }
+                      : { background: "#FDE8E8", color: "#C05050" }
+                  }
+                >
+                  {currentStep.temp}℃
+                </div>
+              )}
+            </div>
           </div>
 
           <p className="text-[13px] text-stone-500 leading-relaxed">
