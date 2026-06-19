@@ -311,6 +311,146 @@ export const RECIPES = [
       },
     },
   },
+  {
+    id: "ice-brew",
+    name: "急冷式アイスコーヒー",
+    nameEn: "Flash Brew",
+    description:
+      "サーバーに氷を入れ、熱いコーヒーを直接注いで急冷する手法。KONOドリッパーで4投丁寧に抽出。クリアでフルーティーなアイスコーヒーに仕上がります。",
+    accent: "#3D7EAA",
+    index: "04",
+    temperature: 91,
+    temperatureLabel: "90〜92℃",
+    grind: "中挽き〜やや細挽き",
+    equipment: "KONO ドリッパー",
+    prep: "サーバーに氷を先に入れ、ドリッパーをセットしてからスタート",
+    amounts: {
+      15: {
+        beans: 15,
+        water: 150,
+        ice: 80,
+        steps: [
+          {
+            time: 0, duration: 10,
+            action: "蒸らし注湯",
+            water: 30, totalWater: 30,
+            instruction: "中心からゆっくり30mlを注ぎます。サーバーには氷80gが入っています。",
+          },
+          {
+            time: 10, duration: 40,
+            action: "蒸らし待機",
+            water: 0, totalWater: 30,
+            instruction: "40秒間触らずに待ちます。",
+          },
+          {
+            time: 50, duration: 20,
+            action: "2投目",
+            water: 41, totalWater: 71,
+            instruction: "71mlまで、やや外側に広げながら注ぎます。（+41ml）",
+          },
+          {
+            time: 70, duration: 10,
+            action: "待機",
+            water: 0, totalWater: 71,
+            instruction: "液面が少し下がるのを待ちます。",
+          },
+          {
+            time: 80, duration: 20,
+            action: "3投目",
+            water: 39, totalWater: 110,
+            instruction: "110mlまで中心寄りに注ぎます。（+39ml）",
+          },
+          {
+            time: 100, duration: 10,
+            action: "待機",
+            water: 0, totalWater: 110,
+            instruction: "少し待ちます。",
+          },
+          {
+            time: 110, duration: 20,
+            action: "4投目（最終）",
+            water: 40, totalWater: 150,
+            instruction: "150mlまで中心主体で注ぎます。（+40ml）",
+          },
+          {
+            time: 130, duration: 40,
+            action: "落ち切り待ち",
+            water: 0, totalWater: 150,
+            instruction: "ドリッパーからコーヒーが落ちきるまで待ちます。",
+          },
+          {
+            time: 170, duration: 0,
+            action: "完成",
+            water: 0, totalWater: 150,
+            instruction: "ドリッパーを外し、サーバーを軽くスワールして氷と混ぜたら完成です。",
+            isFinal: true,
+          },
+        ],
+      },
+      20: {
+        beans: 20,
+        water: 200,
+        ice: 105,
+        steps: [
+          {
+            time: 0, duration: 10,
+            action: "蒸らし注湯",
+            water: 40, totalWater: 40,
+            instruction: "中心からゆっくり40mlを注ぎます。サーバーには氷105gが入っています。",
+          },
+          {
+            time: 10, duration: 40,
+            action: "蒸らし待機",
+            water: 0, totalWater: 40,
+            instruction: "40秒間触らずに待ちます。",
+          },
+          {
+            time: 50, duration: 20,
+            action: "2投目",
+            water: 55, totalWater: 95,
+            instruction: "95mlまで、やや外側に広げながら注ぎます。（+55ml）",
+          },
+          {
+            time: 70, duration: 10,
+            action: "待機",
+            water: 0, totalWater: 95,
+            instruction: "液面が少し下がるのを待ちます。",
+          },
+          {
+            time: 80, duration: 20,
+            action: "3投目",
+            water: 53, totalWater: 148,
+            instruction: "148mlまで中心寄りに注ぎます。（+53ml）",
+          },
+          {
+            time: 100, duration: 10,
+            action: "待機",
+            water: 0, totalWater: 148,
+            instruction: "少し待ちます。",
+          },
+          {
+            time: 110, duration: 20,
+            action: "4投目（最終）",
+            water: 52, totalWater: 200,
+            instruction: "200mlまで中心主体で注ぎます。（+52ml）",
+          },
+          {
+            time: 130, duration: 40,
+            action: "落ち切り待ち",
+            water: 0, totalWater: 200,
+            instruction: "ドリッパーからコーヒーが落ちきるまで待ちます。",
+          },
+          {
+            time: 170, duration: 0,
+            action: "完成",
+            water: 0, totalWater: 200,
+            instruction: "ドリッパーを外し、サーバーを軽くスワールして氷と混ぜたら完成です。",
+            isFinal: true,
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getRecipeData(recipe, beanAmount) {

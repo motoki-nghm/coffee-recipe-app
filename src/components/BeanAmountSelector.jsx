@@ -36,6 +36,11 @@ export default function BeanAmountSelector({ recipe, selected, onSelect, onStart
                 <div className="text-[12px] text-stone-500">
                   湯量 <span className="font-medium text-stone-700">{data.water} ml</span>
                 </div>
+                {data.ice != null && (
+                  <div className="text-[12px] text-stone-500">
+                    氷 <span className="font-medium text-stone-700">{data.ice} g</span>
+                  </div>
+                )}
                 <div className="text-[11px] text-stone-300 mt-0.5">
                   1 : {(data.water / data.beans).toFixed(1)}
                 </div>
@@ -51,10 +56,21 @@ export default function BeanAmountSelector({ recipe, selected, onSelect, onStart
           <p className="text-[11px] tracking-[0.15em] text-stone-400 uppercase mb-4">
             レシピ詳細
           </p>
+          {recipe.prep && (
+            <div
+              className="rounded-xl px-4 py-3 text-[12px] leading-relaxed"
+              style={{ background: recipe.accent + "12", color: recipe.accent }}
+            >
+              準備: {recipe.prep}
+            </div>
+          )}
           <div className="flex flex-col gap-3">
             {[
               { label: "豆の量", value: `${selected} g` },
               { label: "湯量", value: `${recipe.amounts[selected].water} ml` },
+              ...(recipe.amounts[selected].ice != null
+                ? [{ label: "氷", value: `${recipe.amounts[selected].ice} g` }]
+                : []),
               { label: "湯温", value: recipe.temperatureLabel },
               { label: "挽き目", value: recipe.grind },
               { label: "器具", value: recipe.equipment },
