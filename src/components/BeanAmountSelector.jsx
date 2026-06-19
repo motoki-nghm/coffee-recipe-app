@@ -2,11 +2,13 @@ export default function BeanAmountSelector({ recipe, selected, onSelect, onStart
   const amounts = [15, 20];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
+
+      {/* 豆量セレクター */}
       <div>
-        <h3 className="text-base font-semibold text-gray-700 mb-3">
-          コーヒー豆の量を選んでください
-        </h3>
+        <p className="text-[11px] tracking-[0.15em] text-stone-400 uppercase mb-4">
+          豆の量
+        </p>
         <div className="grid grid-cols-2 gap-3">
           {amounts.map((amount) => {
             const data = recipe.amounts[amount];
@@ -15,20 +17,27 @@ export default function BeanAmountSelector({ recipe, selected, onSelect, onStart
               <button
                 key={amount}
                 onClick={() => onSelect(amount)}
-                className={`rounded-xl border-2 p-4 transition-all ${
-                  isSelected
-                    ? `${recipe.borderColor} ${recipe.bgColor} shadow-md scale-[1.02]`
-                    : "border-gray-200 bg-white hover:border-gray-300"
-                }`}
+                className="relative rounded-2xl border p-5 text-left transition-all"
+                style={{
+                  borderColor: isSelected ? recipe.accent : "#E7E5E0",
+                  background: isSelected ? "#FAFAF8" : "#FFFFFF",
+                }}
               >
-                <div className={`text-3xl font-bold mb-1 ${isSelected ? recipe.textColor : "text-gray-700"}`}>
-                  {amount}g
+                {isSelected && (
+                  <span
+                    className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full"
+                    style={{ background: recipe.accent }}
+                  />
+                )}
+                <div className="text-3xl font-light text-stone-900 mb-2 tracking-tight">
+                  {amount}
+                  <span className="text-base ml-0.5 text-stone-400">g</span>
                 </div>
-                <div className="text-sm text-gray-500">
-                  湯量: <span className="font-semibold text-gray-700">{data.water}ml</span>
+                <div className="text-[12px] text-stone-500">
+                  湯量 <span className="font-medium text-stone-700">{data.water} ml</span>
                 </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  比率 1:{(data.water / data.beans).toFixed(1)}
+                <div className="text-[11px] text-stone-300 mt-0.5">
+                  1 : {(data.water / data.beans).toFixed(1)}
                 </div>
               </button>
             );
@@ -36,43 +45,40 @@ export default function BeanAmountSelector({ recipe, selected, onSelect, onStart
         </div>
       </div>
 
+      {/* レシピ詳細 */}
       {selected && (
-        <div className={`rounded-xl ${recipe.bgColor} border ${recipe.borderColor} p-4`}>
-          <div className="text-sm font-medium text-gray-600 mb-2">レシピ概要</div>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-500">豆の量</span>
-              <span className="font-semibold">{selected}g</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-500">湯量</span>
-              <span className="font-semibold">{recipe.amounts[selected].water}ml</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-500">湯温</span>
-              <span className="font-semibold">{recipe.temperature}℃</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-500">挽き目</span>
-              <span className="font-semibold text-xs">{recipe.grind}</span>
-            </div>
-          </div>
-          <div className="mt-2 pt-2 border-t border-white/50 text-xs text-gray-500">
-            器具: {recipe.equipment}
+        <div className="border-t border-stone-100 pt-6">
+          <p className="text-[11px] tracking-[0.15em] text-stone-400 uppercase mb-4">
+            レシピ詳細
+          </p>
+          <div className="flex flex-col gap-3">
+            {[
+              { label: "豆の量", value: `${selected} g` },
+              { label: "湯量", value: `${recipe.amounts[selected].water} ml` },
+              { label: "湯温", value: `${recipe.temperature} ℃` },
+              { label: "挽き目", value: recipe.grind },
+              { label: "器具", value: recipe.equipment },
+            ].map(({ label, value }) => (
+              <div key={label} className="flex justify-between items-baseline">
+                <span className="text-[12px] text-stone-400">{label}</span>
+                <span className="text-[13px] text-stone-700 font-medium text-right max-w-[60%]">{value}</span>
+              </div>
+            ))}
           </div>
         </div>
       )}
 
+      {/* スタートボタン */}
       <button
         onClick={onStart}
         disabled={!selected}
-        className={`w-full py-4 rounded-xl text-white font-bold text-lg transition-all ${
-          selected
-            ? `${recipe.buttonColor} shadow-md hover:shadow-lg active:scale-[0.98]`
-            : "bg-gray-200 text-gray-400 cursor-not-allowed"
-        }`}
+        className="w-full py-4 rounded-2xl text-[14px] font-medium tracking-wide transition-all"
+        style={{
+          background: selected ? "#1A1A1A" : "#E7E5E0",
+          color: selected ? "#FFFFFF" : "#A8A5A0",
+        }}
       >
-        {selected ? `${recipe.emoji} レシピを開始する` : "豆の量を選んでください"}
+        {selected ? "はじめる" : "豆の量を選んでください"}
       </button>
     </div>
   );

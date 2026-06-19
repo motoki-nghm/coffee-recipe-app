@@ -1,31 +1,37 @@
-export default function RecipeCard({ recipe, onClick }) {
+export default function RecipeCard({ recipe, isLast, onClick }) {
   return (
     <button
       onClick={() => onClick(recipe)}
-      className={`w-full text-left rounded-2xl border-2 ${recipe.borderColor} ${recipe.bgColor} p-5 transition-all hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]`}
+      className={`group w-full text-left py-6 transition-colors hover:bg-stone-50 -mx-2 px-2 rounded-lg ${
+        !isLast ? "border-b border-stone-100" : ""
+      }`}
     >
       <div className="flex items-start gap-4">
-        <div className={`text-4xl`}>{recipe.emoji}</div>
+        <span
+          className="text-[11px] font-medium tracking-widest mt-0.5 shrink-0"
+          style={{ color: recipe.accent }}
+        >
+          {recipe.index}
+        </span>
         <div className="flex-1 min-w-0">
-          <h2 className={`text-xl font-bold ${recipe.textColor} mb-1`}>
+          <h2 className="font-serif-display text-xl text-stone-900 leading-snug mb-0.5">
             {recipe.name}
           </h2>
-          <p className="text-xs text-gray-500 mb-2">{recipe.nameEn}</p>
-          <p className="text-sm text-gray-600 leading-relaxed">
+          <p className="text-[11px] tracking-widest text-stone-400 uppercase mb-3">
+            {recipe.nameEn}
+          </p>
+          <p className="text-[13px] text-stone-500 leading-relaxed line-clamp-2">
             {recipe.description}
           </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1 bg-white/70 rounded-full px-2 py-0.5 text-xs text-gray-600">
-              🌡️ {recipe.temperature}℃
-            </span>
-            <span className="inline-flex items-center gap-1 bg-white/70 rounded-full px-2 py-0.5 text-xs text-gray-600">
-              ⚙️ {recipe.grind}
+          <div className="mt-3 flex gap-3">
+            <span className="text-[11px] text-stone-400">
+              {recipe.temperature}℃ · {recipe.grind}
             </span>
           </div>
         </div>
-        <div className={`text-gray-400 mt-1`}>
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <div className="mt-1 text-stone-300 group-hover:text-stone-400 transition-colors">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </div>
       </div>

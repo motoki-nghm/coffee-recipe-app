@@ -13,23 +13,24 @@ export default function RecipeTimer({ recipe, beanAmount, onBack }) {
   const startTimeRef = useRef(null);
   const pausedElapsedRef = useRef(0);
 
-  const getCurrentStepIndex = useCallback((time) => {
-    for (let i = steps.length - 1; i >= 0; i--) {
-      if (time >= steps[i].time) return i;
-    }
-    return 0;
-  }, [steps]);
+  const getCurrentStepIndex = useCallback(
+    (time) => {
+      for (let i = steps.length - 1; i >= 0; i--) {
+        if (time >= steps[i].time) return i;
+      }
+      return 0;
+    },
+    [steps]
+  );
 
   const currentStepIndex = getCurrentStepIndex(elapsed);
   const currentStep = steps[currentStepIndex];
   const nextStep = steps[currentStepIndex + 1];
-
-  const stepProgress = currentStep.duration > 0
-    ? Math.min(((elapsed - currentStep.time) / currentStep.duration) * 100, 100)
-    : 100;
-
   const overallProgress = Math.min((elapsed / totalDuration) * 100, 100);
-
+  const stepProgress =
+    currentStep.duration > 0
+      ? Math.min(((elapsed - currentStep.time) / currentStep.duration) * 100, 100)
+      : 100;
   const timeUntilNext = nextStep ? nextStep.time - elapsed : 0;
 
   useEffect(() => {
@@ -44,8 +45,7 @@ export default function RecipeTimer({ recipe, beanAmount, onBack }) {
     startTimeRef.current = Date.now() - pausedElapsedRef.current * 1000;
     setIsRunning(true);
     intervalRef.current = setInterval(() => {
-      const newElapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
-      setElapsed(newElapsed);
+      setElapsed(Math.floor((Date.now() - startTimeRef.current) / 1000));
     }, 100);
   };
 
@@ -63,161 +63,181 @@ export default function RecipeTimer({ recipe, beanAmount, onBack }) {
     setIsFinished(false);
   };
 
-  useEffect(() => {
-    return () => clearInterval(intervalRef.current);
-  }, []);
+  useEffect(() => () => clearInterval(intervalRef.current), []);
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* タイマー表示 */}
-      <div className={`rounded-2xl ${recipe.bgColor} border-2 ${recipe.borderColor} p-6 text-center`}>
-        <div className={`text-6xl font-mono font-bold ${recipe.textColor} mb-2`}>
+    <div className="flex flex-col gap-7">
+
+      {/* タイマー */}
+      <div className="text-center pt-2 pb-4">
+        <div
+          className="font-serif-display text-[72px] leading-none tracking-tight text-stone-900 mb-1"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
           {formatTime(elapsed)}
         </div>
-        <div className="text-sm text-gray-500">
-          総時間: {formatTime(totalDuration)}
-        </div>
+        <p className="text-[11px] text-stone-300 tracking-widest uppercase">
+          / {formatTime(totalDuration)}
+        </p>
 
-        {/* 全体プログレスバー */}
-        <div className="mt-4 h-2 bg-white/50 rounded-full overflow-hidden">
+        {/* プログレスライン */}
+        <div className="mt-5 h-px bg-stone-100 relative overflow-hidden rounded-full">
           <div
-            className={`h-full ${recipe.accentColor} rounded-full transition-all duration-300`}
-            style={{ width: `${overallProgress}%` }}
+            className="absolute inset-y-0 left-0 transition-all duration-300 rounded-full"
+            style={{ width: `${overallProgress}%`, background: recipe.accent }}
           />
         </div>
       </div>
 
-      {/* 現在のステップ */}
-      <div className="rounded-2xl bg-white border-2 border-gray-100 shadow-sm p-5">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-2xl">{currentStep.icon}</span>
-          <div>
-            <div className={`font-bold text-lg ${isFinished ? "text-green-600" : recipe.textColor}`}>
-              {currentStep.action}
-            </div>
-            <div className="text-xs text-gray-400">
-              ステップ {currentStepIndex + 1} / {steps.length}
-            </div>
-          </div>
+      {/* 現在ステップ */}
+      <div>
+        <div className="flex items-baseline justify-between mb-3">
+          <p className="text-[11px] tracking-[0.15em] text-stone-400 uppercase">
+            現在のステップ
+          </p>
+          <p className="text-[11px] text-stone-300">
+            {currentStepIndex + 1} / {steps.length}
+          </p>
         </div>
 
-        <p className="text-sm text-gray-700 leading-relaxed mb-4">
-          {currentStep.instruction}
-        </p>
-
-        {currentStep.water > 0 && (
-          <div className={`inline-flex items-center gap-2 ${recipe.bgColor} rounded-lg px-3 py-2 text-sm font-semibold ${recipe.textColor}`}>
-            <span>💧</span>
-            <span>
-              {currentStep.water}ml 注湯
-              <span className="text-xs font-normal ml-1 text-gray-500">
-                （累計 {currentStep.totalWater}ml / {data.water}ml）
-              </span>
-            </span>
-          </div>
-        )}
-
-        {/* ステップ内プログレス */}
-        {currentStep.duration > 0 && !currentStep.isFinal && (
-          <div className="mt-3">
-            <div className="flex justify-between text-xs text-gray-400 mb-1">
-              <span>ステップ進捗</span>
-              <span>{Math.round(stepProgress)}%</span>
-            </div>
-            <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+        <div className="rounded-2xl border border-stone-100 p-5" style={{ background: "#FAFAF8" }}>
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <h3 className="font-serif-display text-xl text-stone-900 leading-snug">
+              {currentStep.action}
+            </h3>
+            {currentStep.water > 0 && (
               <div
-                className={`h-full ${recipe.accentColor} rounded-full transition-all duration-300`}
-                style={{ width: `${stepProgress}%` }}
+                className="shrink-0 text-[11px] font-medium px-2.5 py-1 rounded-full"
+                style={{ background: recipe.accent + "18", color: recipe.accent }}
+              >
+                {currentStep.water} ml
+              </div>
+            )}
+          </div>
+
+          <p className="text-[13px] text-stone-500 leading-relaxed">
+            {currentStep.instruction}
+          </p>
+
+          {currentStep.water > 0 && (
+            <p className="mt-2 text-[11px] text-stone-400">
+              累計 {currentStep.totalWater} ml / {data.water} ml
+            </p>
+          )}
+
+          {/* ステップ内プログレス */}
+          {currentStep.duration > 0 && !currentStep.isFinal && (
+            <div className="mt-4 h-px bg-stone-200 relative overflow-hidden rounded-full">
+              <div
+                className="absolute inset-y-0 left-0 transition-all duration-300 rounded-full"
+                style={{ width: `${stepProgress}%`, background: recipe.accent }}
               />
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* 次のステップ */}
       {nextStep && !isFinished && (
-        <div className="rounded-xl bg-gray-50 border border-gray-200 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-gray-500">
-              <span className="text-base">{nextStep.icon}</span>
-              <span>次: <span className="font-medium text-gray-700">{nextStep.action}</span></span>
-            </div>
-            <span className="text-sm font-mono text-gray-500">
-              {timeUntilNext > 0 ? `${timeUntilNext}秒後` : "まもなく"}
-            </span>
+        <div className="flex items-center justify-between py-3 border-t border-b border-stone-100">
+          <div>
+            <p className="text-[10px] tracking-widest text-stone-300 uppercase mb-0.5">Next</p>
+            <p className="text-[13px] text-stone-600 font-medium">{nextStep.action}</p>
+            {nextStep.water > 0 && (
+              <p className="text-[11px] text-stone-400">{nextStep.water} ml</p>
+            )}
           </div>
-          {nextStep.water > 0 && (
-            <div className="text-xs text-gray-400 mt-1 ml-6">
-              💧 {nextStep.water}ml
-            </div>
-          )}
+          <p className="text-[13px] font-light text-stone-400 tabular-nums">
+            {timeUntilNext > 0 ? `${timeUntilNext}s` : "—"}
+          </p>
         </div>
       )}
 
-      {/* 全ステップ一覧 */}
-      <div className="rounded-xl bg-white border border-gray-100 overflow-hidden">
-        <div className="px-4 py-2 bg-gray-50 text-xs font-semibold text-gray-500 border-b border-gray-100">
+      {/* ステップ一覧 */}
+      <div>
+        <p className="text-[11px] tracking-[0.15em] text-stone-400 uppercase mb-3">
           全ステップ
-        </div>
-        {steps.map((step, i) => {
-          const isPast = elapsed > step.time + (step.duration || 0);
-          const isCurrent = i === currentStepIndex && !isFinished;
-          return (
-            <div
-              key={i}
-              className={`flex items-center gap-3 px-4 py-2.5 border-b border-gray-50 last:border-0 transition-colors ${
-                isCurrent ? `${recipe.bgColor}` : isPast ? "bg-gray-50/50" : "bg-white"
-              }`}
-            >
-              <span className={`text-lg ${isPast && !isCurrent ? "opacity-40" : ""}`}>
-                {isPast && !isCurrent ? "✅" : step.icon}
-              </span>
-              <div className="flex-1 min-w-0">
-                <div className={`text-sm font-medium truncate ${isCurrent ? recipe.textColor : isPast ? "text-gray-400" : "text-gray-600"}`}>
+        </p>
+        <div className="flex flex-col">
+          {steps.map((step, i) => {
+            const isPast = elapsed > step.time + (step.duration || 0) && i !== currentStepIndex;
+            const isCurrent = i === currentStepIndex && !isFinished;
+            return (
+              <div
+                key={i}
+                className={`flex items-center gap-3 py-2.5 border-b border-stone-50 last:border-0`}
+              >
+                <div
+                  className="w-1 h-1 rounded-full shrink-0 mt-0.5"
+                  style={{
+                    background: isCurrent
+                      ? recipe.accent
+                      : isPast
+                      ? "#D0CEC9"
+                      : "#E7E5E0",
+                  }}
+                />
+                <span
+                  className={`flex-1 text-[13px] transition-colors ${
+                    isCurrent
+                      ? "text-stone-900 font-medium"
+                      : isPast
+                      ? "text-stone-300 line-through"
+                      : "text-stone-500"
+                  }`}
+                >
                   {step.action}
-                </div>
+                </span>
+                <span className="text-[11px] text-stone-300 font-light tabular-nums">
+                  {formatTime(step.time)}
+                </span>
+                {step.water > 0 && (
+                  <span className="text-[11px] text-stone-300 w-12 text-right tabular-nums">
+                    {step.water}ml
+                  </span>
+                )}
               </div>
-              <div className="text-xs text-gray-400 font-mono shrink-0">
-                {formatTime(step.time)}
-                {step.water > 0 && <span className="ml-1 text-blue-400">{step.water}ml</span>}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-      {/* コントロールボタン */}
-      <div className="flex gap-3">
+      {/* コントロール */}
+      <div className="flex gap-3 pt-2">
         {!isFinished ? (
           <>
             <button
               onClick={isRunning ? pauseTimer : startTimer}
-              className={`flex-1 py-4 rounded-xl text-white font-bold text-lg transition-all shadow-md hover:shadow-lg active:scale-[0.98] ${recipe.buttonColor}`}
+              className="flex-1 py-4 rounded-2xl text-[14px] font-medium tracking-wide transition-all"
+              style={{ background: "#1A1A1A", color: "#FFFFFF" }}
             >
-              {isRunning ? "⏸ 一時停止" : elapsed === 0 ? "▶ スタート" : "▶ 再開"}
+              {isRunning ? "一時停止" : elapsed === 0 ? "スタート" : "再開"}
             </button>
             <button
               onClick={resetTimer}
-              className="px-5 py-4 rounded-xl bg-gray-100 text-gray-600 font-bold transition-all hover:bg-gray-200 active:scale-[0.98]"
+              className="w-14 h-14 rounded-2xl border border-stone-200 text-stone-400 hover:bg-stone-50 transition-colors flex items-center justify-center"
             >
-              ↺
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+              </svg>
             </button>
           </>
         ) : (
           <button
             onClick={resetTimer}
-            className={`flex-1 py-4 rounded-xl text-white font-bold text-lg transition-all shadow-md ${recipe.buttonColor}`}
+            className="flex-1 py-4 rounded-2xl text-[14px] font-medium tracking-wide transition-all"
+            style={{ background: "#1A1A1A", color: "#FFFFFF" }}
           >
-            {recipe.emoji} もう一杯淹れる
+            もう一杯淹れる
           </button>
         )}
       </div>
 
       <button
         onClick={onBack}
-        className="w-full py-3 rounded-xl text-gray-500 text-sm font-medium hover:text-gray-700 hover:bg-gray-50 transition-colors"
+        className="text-[12px] text-stone-300 hover:text-stone-500 transition-colors py-1"
       >
-        ← レシピ選択に戻る
+        レシピ選択に戻る
       </button>
     </div>
   );

@@ -1,6 +1,3 @@
-// コーヒーレシピデータ
-// 各レシピは15g/20gの豆量に対応したステップを持つ
-
 export const RECIPES = [
   {
     id: "kasuya-immersion",
@@ -8,13 +5,8 @@ export const RECIPES = [
     nameEn: "Kasuya Immersion",
     description:
       "粕谷哲さん考案の浸漬式レシピ。Clever Dripperなどのバルブ付きドリッパーを使用。豆をお湯に浸してからドリップすることで、均一な抽出を実現します。",
-    emoji: "☕",
-    color: "amber",
-    bgColor: "bg-amber-50",
-    borderColor: "border-amber-300",
-    accentColor: "bg-amber-500",
-    textColor: "text-amber-800",
-    buttonColor: "bg-amber-500 hover:bg-amber-600",
+    accent: "#B5956A",
+    index: "01",
     temperature: 93,
     grind: "中挽き（やや粗め）",
     equipment: "Clever Dripper（またはバルブ付き浸漬ドリッパー）",
@@ -121,13 +113,8 @@ export const RECIPES = [
     nameEn: "Devil's Recipe",
     description:
       "短時間で濃厚なコーヒーを抽出する高強度レシピ。高温・短時間で一気に旨みを引き出します。細かい粒度と高温で、濃厚でパンチのある一杯に。",
-    emoji: "😈",
-    color: "red",
-    bgColor: "bg-red-50",
-    borderColor: "border-red-300",
-    accentColor: "bg-red-500",
-    textColor: "text-red-800",
-    buttonColor: "bg-red-500 hover:bg-red-600",
+    accent: "#8B3A3A",
+    index: "02",
     temperature: 96,
     grind: "中細挽き",
     equipment: "フレンチプレス または Clever Dripper",
@@ -254,13 +241,8 @@ export const RECIPES = [
     nameEn: "Samo Bloom",
     description:
       "長めのブルーム（蒸らし）でガスを十分に抜いてから抽出するレシピ。豆の新鮮さを最大限に活かし、クリアで甘みのある味わいを引き出します。",
-    emoji: "🌸",
-    color: "pink",
-    bgColor: "bg-pink-50",
-    borderColor: "border-pink-300",
-    accentColor: "bg-pink-500",
-    textColor: "text-pink-800",
-    buttonColor: "bg-pink-500 hover:bg-pink-600",
+    accent: "#7A8C6E",
+    index: "03",
     temperature: 91,
     grind: "中挽き",
     equipment: "ドリッパー（V60・Origami等）",

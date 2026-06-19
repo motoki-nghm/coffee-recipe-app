@@ -5,11 +5,7 @@ import BeanAmountSelector from "./components/BeanAmountSelector";
 import RecipeTimer from "./components/RecipeTimer";
 import "./index.css";
 
-const VIEWS = {
-  HOME: "home",
-  SETUP: "setup",
-  TIMER: "timer",
-};
+const VIEWS = { HOME: "home", SETUP: "setup", TIMER: "timer" };
 
 export default function App() {
   const [view, setView] = useState(VIEWS.HOME);
@@ -23,9 +19,7 @@ export default function App() {
   };
 
   const handleStartRecipe = () => {
-    if (beanAmount) {
-      setView(VIEWS.TIMER);
-    }
+    if (beanAmount) setView(VIEWS.TIMER);
   };
 
   const handleBackToHome = () => {
@@ -34,54 +28,64 @@ export default function App() {
     setBeanAmount(null);
   };
 
-  const handleBackToSetup = () => {
-    setView(VIEWS.SETUP);
-  };
+  const handleBackToSetup = () => setView(VIEWS.SETUP);
 
   return (
-    <div className="min-h-svh bg-gray-50">
-      <div className="max-w-md mx-auto min-h-svh bg-white shadow-sm flex flex-col">
+    <div className="min-h-svh" style={{ background: "#F5F3EF" }}>
+      <div className="max-w-sm mx-auto min-h-svh bg-white flex flex-col shadow-[0_0_40px_rgba(0,0,0,0.06)]">
+
         {/* ヘッダー */}
-        <header className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 py-3">
-          <div className="flex items-center gap-2">
-            {view !== VIEWS.HOME && (
+        <header className="px-6 pt-10 pb-6">
+          {view === VIEWS.HOME ? (
+            <div>
+              <p className="text-[11px] tracking-[0.2em] text-stone-400 uppercase mb-2">
+                Coffee Guide
+              </p>
+              <h1 className="font-serif-display text-4xl text-stone-900 leading-tight">
+                Brew
+              </h1>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
               <button
                 onClick={view === VIEWS.TIMER ? handleBackToSetup : handleBackToHome}
-                className="p-1.5 -ml-1.5 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-stone-200 text-stone-500 hover:bg-stone-50 transition-colors"
               >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
-            )}
-            <div>
-              <h1 className="text-base font-bold text-gray-800 leading-tight">
-                ☕ コーヒーレシピ
-              </h1>
-              {view !== VIEWS.HOME && selectedRecipe && (
-                <p className="text-xs text-gray-400">{selectedRecipe.name}</p>
+              {selectedRecipe && (
+                <div>
+                  <p className="text-[10px] tracking-[0.15em] text-stone-400 uppercase">
+                    {selectedRecipe.nameEn}
+                  </p>
+                  <p className="text-sm font-medium text-stone-700 leading-tight">
+                    {selectedRecipe.name}
+                  </p>
+                </div>
               )}
             </div>
-          </div>
+          )}
         </header>
 
-        {/* メインコンテンツ */}
-        <main className="flex-1 px-4 py-5 overflow-y-auto">
+        {/* コンテンツ */}
+        <main className="flex-1 px-6 pb-10 overflow-y-auto">
           {view === VIEWS.HOME && (
-            <div className="flex flex-col gap-4">
-              <div className="mb-2">
-                <p className="text-sm text-gray-500 leading-relaxed">
-                  レシピを選んで、美味しいコーヒーを淹れましょう。
-                  豆の量に合わせた湯量とタイマーでガイドします。
-                </p>
+            <div>
+              <p className="text-[13px] text-stone-400 leading-relaxed mb-8">
+                レシピを選んで、豆の量を決めるだけ。<br />タイマーがステップをガイドします。
+              </p>
+              <div className="flex flex-col">
+                {RECIPES.map((recipe, i) => (
+                  <RecipeCard
+                    key={recipe.id}
+                    recipe={recipe}
+                    isLast={i === RECIPES.length - 1}
+                    onClick={handleSelectRecipe}
+                  />
+                ))}
               </div>
-              {RECIPES.map((recipe) => (
-                <RecipeCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  onClick={handleSelectRecipe}
-                />
-              ))}
             </div>
           )}
 
@@ -102,11 +106,6 @@ export default function App() {
             />
           )}
         </main>
-
-        {/* フッター */}
-        <footer className="px-4 py-3 border-t border-gray-50 text-center">
-          <p className="text-xs text-gray-300">Coffee Recipe Timer</p>
-        </footer>
       </div>
     </div>
   );
