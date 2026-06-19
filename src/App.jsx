@@ -41,9 +41,20 @@ export default function App() {
               <p className="text-[10px] tracking-[0.3em] text-stone-300 uppercase mb-3">
                 Coffee Guide
               </p>
-              <h1 className="font-serif-display text-[54px] leading-none" style={{ color: "#B8845A" }}>
-                Brew
-              </h1>
+              <div className="flex items-center gap-3">
+                <svg className="w-10 h-10 shrink-0" viewBox="0 0 48 48" fill="none">
+                  <rect x="5" y="7" width="38" height="5" rx="2.5" fill="#B8845A"/>
+                  <path d="M7 12 L41 12 L28 38 L20 38 Z" fill="#B8845A"/>
+                  <rect x="22" y="38" width="4" height="2" fill="#B8845A"/>
+                  <ellipse cx="24" cy="43" rx="3" ry="3.5" fill="#B8845A"/>
+                  <line x1="24" y1="14" x2="24" y2="36" stroke="#F8F4EE" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/>
+                  <line x1="17" y1="14" x2="21" y2="36" stroke="#F8F4EE" strokeWidth="1" strokeLinecap="round" opacity="0.2"/>
+                  <line x1="31" y1="14" x2="27" y2="36" stroke="#F8F4EE" strokeWidth="1" strokeLinecap="round" opacity="0.2"/>
+                </svg>
+                <h1 className="font-serif-display text-[54px] leading-none" style={{ color: "#B8845A" }}>
+                  Brew
+                </h1>
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-3">
