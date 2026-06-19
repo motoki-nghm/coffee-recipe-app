@@ -1,25 +1,31 @@
 import { useState } from "react";
 import { RECIPES } from "./data/recipes";
 import RecipeCard from "./components/RecipeCard";
-import BeanAmountSelector from "./components/BeanAmountSelector";
+import BottomSheet from "./components/BottomSheet";
 import RecipeTimer from "./components/RecipeTimer";
 import "./index.css";
 
-const VIEWS = { HOME: "home", SETUP: "setup", TIMER: "timer" };
+const VIEWS = { HOME: "home", TIMER: "timer" };
 
 export default function App() {
   const [view, setView] = useState(VIEWS.HOME);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [beanAmount, setBeanAmount] = useState(null);
+  const [sheetRecipe, setSheetRecipe] = useState(null);
 
   const handleSelectRecipe = (recipe) => {
-    setSelectedRecipe(recipe);
-    setBeanAmount(null);
-    setView(VIEWS.SETUP);
+    setSheetRecipe(recipe);
   };
 
-  const handleStartRecipe = () => {
-    if (beanAmount) setView(VIEWS.TIMER);
+  const handleStartRecipe = (recipe, amount) => {
+    setSelectedRecipe(recipe);
+    setBeanAmount(amount);
+    setSheetRecipe(null);
+    setView(VIEWS.TIMER);
+  };
+
+  const handleCloseSheet = () => {
+    setSheetRecipe(null);
   };
 
   const handleBackToHome = () => {
@@ -27,8 +33,6 @@ export default function App() {
     setSelectedRecipe(null);
     setBeanAmount(null);
   };
-
-  const handleBackToSetup = () => setView(VIEWS.SETUP);
 
   return (
     <div className="min-h-svh" style={{ background: "#F5F3EF" }}>
@@ -59,7 +63,7 @@ export default function App() {
           ) : (
             <div className="flex items-center gap-3">
               <button
-                onClick={view === VIEWS.TIMER ? handleBackToSetup : handleBackToHome}
+                onClick={handleBackToHome}
                 className="w-8 h-8 flex items-center justify-center rounded-full border border-stone-200 text-stone-500 hover:bg-stone-50 transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -104,24 +108,24 @@ export default function App() {
             </div>
           )}
 
-          {view === VIEWS.SETUP && selectedRecipe && (
-            <BeanAmountSelector
-              recipe={selectedRecipe}
-              selected={beanAmount}
-              onSelect={setBeanAmount}
-              onStart={handleStartRecipe}
-            />
-          )}
-
           {view === VIEWS.TIMER && selectedRecipe && beanAmount && (
             <RecipeTimer
               recipe={selectedRecipe}
               beanAmount={beanAmount}
-              onBack={handleBackToSetup}
+              onBack={handleBackToHome}
             />
           )}
         </main>
       </div>
+
+      {/* ボトムシート */}
+      {sheetRecipe && (
+        <BottomSheet
+          recipe={sheetRecipe}
+          onClose={handleCloseSheet}
+          onStart={handleStartRecipe}
+        />
+      )}
     </div>
   );
 }
