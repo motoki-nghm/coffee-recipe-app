@@ -8,6 +8,7 @@ export const RECIPES = [
     id: "devil-recipe",
     name: "悪魔のレシピ",
     nameEn: "Devil's Hybrid Method",
+    subtitle: "浸漬式 ハイブリッドメソッド",
     description:
       "粕谷哲さん考案のハイブリッドメソッド。前半は透過式（スイッチ開・90℃）で酸味と甘みを引き出し、後半は浸漬式（スイッチ閉・70℃）でまろやかさを加える二刀流レシピ。HARIO Switchが必須です。",
     accent: "#8B3A3A",

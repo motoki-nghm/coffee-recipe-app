@@ -38,10 +38,10 @@ export default function App() {
         <header className="px-6 pt-10 pb-6">
           {view === VIEWS.HOME ? (
             <div>
-              <p className="text-[11px] tracking-[0.2em] text-stone-400 uppercase mb-2">
+              <p className="text-[10px] tracking-[0.3em] text-stone-300 uppercase mb-3">
                 Coffee Guide
               </p>
-              <h1 className="font-serif-display text-4xl text-stone-900 leading-tight">
+              <h1 className="font-serif-display text-[54px] leading-none" style={{ color: "#B8845A" }}>
                 Brew
               </h1>
             </div>
@@ -76,6 +76,10 @@ export default function App() {
               <p className="text-[13px] text-stone-400 leading-relaxed mb-8">
                 レシピを選んで、豆の量を決めるだけ。<br />タイマーがステップをガイドします。
               </p>
+              <div className="flex items-center gap-3 mb-2">
+                <p className="text-[10px] tracking-[0.25em] text-stone-300 uppercase shrink-0">Recipes</p>
+                <div className="h-px flex-1 bg-stone-100" />
+              </div>
               <div className="flex flex-col">
                 {RECIPES.map((recipe, i) => (
                   <RecipeCard

@@ -14,9 +14,17 @@ export default function RecipeCard({ recipe, isLast, onClick }) {
           {recipe.index}
         </span>
         <div className="flex-1 min-w-0">
-          <h2 className="font-serif-display text-xl text-stone-900 leading-snug mb-0.5">
+          <h2 className="font-serif-display text-xl text-stone-900 leading-snug mb-1">
             {recipe.name}
           </h2>
+          {recipe.subtitle && (
+            <span
+              className="inline-block text-[10px] tracking-wide border rounded-full px-2 py-0.5 mb-1"
+              style={{ color: "#B8845A", borderColor: "#B8845A55" }}
+            >
+              {recipe.subtitle}
+            </span>
+          )}
           <p className="text-[11px] tracking-widest text-stone-400 uppercase mb-3">
             {recipe.nameEn}
           </p>
