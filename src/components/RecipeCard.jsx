@@ -25,9 +25,23 @@ export default function RecipeCard({ recipe, isLast, onClick }) {
               {recipe.subtitle}
             </span>
           )}
-          <p className="text-[11px] tracking-widest text-stone-400 uppercase mb-3">
-            {recipe.nameEn}
-          </p>
+          <div className="flex items-center gap-2 mb-3">
+            <p className="text-[11px] tracking-widest text-stone-400 uppercase">
+              {recipe.nameEn}
+            </p>
+            {recipe.category && (
+              <span
+                className="text-[9px] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-full"
+                style={
+                  recipe.category === "ice"
+                    ? { background: "#E8F4F8", color: "#4A8FA8" }
+                    : { background: "#FDE8E8", color: "#C05050" }
+                }
+              >
+                {recipe.category === "ice" ? "ICE" : "HOT"}
+              </span>
+            )}
+          </div>
           <p className="text-[13px] text-stone-500 leading-relaxed line-clamp-2">
             {recipe.description}
           </p>
