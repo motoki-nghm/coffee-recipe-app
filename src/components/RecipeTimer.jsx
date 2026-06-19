@@ -12,6 +12,32 @@ export default function RecipeTimer({ recipe, beanAmount, onBack }) {
   const intervalRef = useRef(null);
   const startTimeRef = useRef(null);
   const pausedElapsedRef = useRef(0);
+  const wakeLockRef = useRef(null);
+
+  const acquireWakeLock = async () => {
+    if (!("wakeLock" in navigator)) return;
+    try {
+      wakeLockRef.current = await navigator.wakeLock.request("screen");
+    } catch {
+      // 非対応環境やユーザー拒否は無視
+    }
+  };
+
+  const releaseWakeLock = () => {
+    wakeLockRef.current?.release();
+    wakeLockRef.current = null;
+  };
+
+  // タブが背面に回ったとき自動解放されるので、復帰時に再取得
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible" && isRunning) {
+        acquireWakeLock();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", onVisibilityChange);
+  }, [isRunning]);
 
   const getCurrentStepIndex = useCallback(
     (time) => {
@@ -38,12 +64,14 @@ export default function RecipeTimer({ recipe, beanAmount, onBack }) {
       setIsRunning(false);
       setIsFinished(true);
       clearInterval(intervalRef.current);
+      releaseWakeLock();
     }
   }, [elapsed, totalDuration, isRunning]);
 
   const startTimer = () => {
     startTimeRef.current = Date.now() - pausedElapsedRef.current * 1000;
     setIsRunning(true);
+    acquireWakeLock();
     intervalRef.current = setInterval(() => {
       setElapsed(Math.floor((Date.now() - startTimeRef.current) / 1000));
     }, 100);
@@ -52,18 +80,23 @@ export default function RecipeTimer({ recipe, beanAmount, onBack }) {
   const pauseTimer = () => {
     pausedElapsedRef.current = elapsed;
     setIsRunning(false);
+    releaseWakeLock();
     clearInterval(intervalRef.current);
   };
 
   const resetTimer = () => {
     clearInterval(intervalRef.current);
+    releaseWakeLock();
     pausedElapsedRef.current = 0;
     setElapsed(0);
     setIsRunning(false);
     setIsFinished(false);
   };
 
-  useEffect(() => () => clearInterval(intervalRef.current), []);
+  useEffect(() => () => {
+    clearInterval(intervalRef.current);
+    releaseWakeLock();
+  }, []);
 
   return (
     <div className="flex flex-col gap-7">
