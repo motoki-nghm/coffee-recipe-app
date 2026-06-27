@@ -550,6 +550,104 @@ export const RECIPES = [
       },
     },
   },
+  {
+    id: "switch-cold-bloom-ice",
+    name: "スイッチ浸漬アイス",
+    nameEn: "Switch Cold Bloom Iced",
+    subtitle: "浸漬式 × サモブルーム",
+    category: "ice",
+    description:
+      "HARIO Switch の浸漬機能とサモブルームを掛け合わせたアイスコーヒー。スイッチを閉じたまま常温水で2分蒸らし、熱湯追加後もそのまま浸漬。スイッチを開いた瞬間から氷の上にドリップし急冷。クリアで香り高く、浸漬ならではのまろやかさも持つ一杯。",
+    accent: "#3D7A80",
+    index: "06",
+    temperature: 90,
+    temperatureLabel: "20℃ → 90℃",
+    grind: "中挽き〜やや粗挽き",
+    equipment: "HARIO Switch（必須）",
+    prep: "サーバーに急冷用の氷を準備（15g→55g、20g→70g）。フィルターをリンスしてお湯を捨てたら、スイッチを閉じて粉をセット",
+    amounts: {
+      15: {
+        beans: 15,
+        water: 135,
+        ice: 55,
+        steps: [
+          {
+            time: 0, duration: 120,
+            action: "常温水ブルーム（スイッチ閉）",
+            water: 45, totalWater: 45,
+            instruction: "スイッチを閉じた状態で常温水（約20℃）を45g注ぎ、2分間蒸らします。水がドリッパー内に溜まり、粉全体が均一に濡れます。",
+            temp: 20,
+          },
+          {
+            time: 120, duration: 15,
+            action: "熱湯を注ぐ（スイッチ閉）",
+            water: 90, totalWater: 135,
+            instruction: "スイッチを閉じたまま90℃のお湯を90g注ぎます（累計135g）。蒸らした粉に熱湯が加わり、浸漬抽出が始まります。",
+            temp: 90,
+          },
+          {
+            time: 135, duration: 60,
+            action: "浸漬スティープ（スイッチ閉）",
+            water: 0, totalWater: 135,
+            instruction: "スイッチを閉じたまま60秒待ちます。浸漬式で均一に抽出が進みます。",
+          },
+          {
+            time: 195, duration: 90,
+            action: "スイッチを開く・急冷ドリップ",
+            water: 0, totalWater: 135,
+            instruction: "スイッチを開きます。氷を入れたサーバーに直接ドリップされ、急冷されます。落ちきるまでそのまま待ちます（目安1〜1分半）。",
+          },
+          {
+            time: 285, duration: 0,
+            action: "完成",
+            water: 0, totalWater: 135,
+            instruction: "サーバーを軽くスワールして氷と馴染ませ、氷を入れたグラスに注いで完成です。",
+            isFinal: true,
+          },
+        ],
+      },
+      20: {
+        beans: 20,
+        water: 180,
+        ice: 70,
+        steps: [
+          {
+            time: 0, duration: 120,
+            action: "常温水ブルーム（スイッチ閉）",
+            water: 60, totalWater: 60,
+            instruction: "スイッチを閉じた状態で常温水（約20℃）を60g注ぎ、2分間蒸らします。水がドリッパー内に溜まり、粉全体が均一に濡れます。",
+            temp: 20,
+          },
+          {
+            time: 120, duration: 15,
+            action: "熱湯を注ぐ（スイッチ閉）",
+            water: 120, totalWater: 180,
+            instruction: "スイッチを閉じたまま90℃のお湯を120g注ぎます（累計180g）。蒸らした粉に熱湯が加わり、浸漬抽出が始まります。",
+            temp: 90,
+          },
+          {
+            time: 135, duration: 60,
+            action: "浸漬スティープ（スイッチ閉）",
+            water: 0, totalWater: 180,
+            instruction: "スイッチを閉じたまま60秒待ちます。浸漬式で均一に抽出が進みます。",
+          },
+          {
+            time: 195, duration: 90,
+            action: "スイッチを開く・急冷ドリップ",
+            water: 0, totalWater: 180,
+            instruction: "スイッチを開きます。氷を入れたサーバーに直接ドリップされ、急冷されます。落ちきるまでそのまま待ちます（目安1〜1分半）。",
+          },
+          {
+            time: 285, duration: 0,
+            action: "完成",
+            water: 0, totalWater: 180,
+            instruction: "サーバーを軽くスワールして氷と馴染ませ、氷を入れたグラスに注いで完成です。",
+            isFinal: true,
+          },
+        ],
+      },
+    },
+  },
 ];
 
 export function getRecipeData(recipe, beanAmount) {
